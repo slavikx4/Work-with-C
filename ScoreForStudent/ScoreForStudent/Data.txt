@@ -1,0 +1,6 @@
+slava boiko
+Mathematic : 1
+Geography: 1
+Physic: 1
+Biologi: 1
+Programming: 1
