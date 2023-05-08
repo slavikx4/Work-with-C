@@ -1,0 +1,3 @@
+﻿  Student.cpp
+C:\Users\slava\source\repos\PropuskStudent\PropuskStudent\Student.cpp(3,30): warning C4081: требуется "newline"; обнаружен ";"
+  PropuskStudent.vcxproj -> C:\Users\slava\source\repos\PropuskStudent\x64\Debug\PropuskStudent.exe
