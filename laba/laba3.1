@@ -22,26 +22,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 class Vector2D {
-    friend void DrawEllipse(HDC, const Vector2D&, double);
-    friend Vector2D operator+(const Vector2D& left, const Vector2D& right);
 public:
-    Vector2D(const float& x = 0.0f,const float& y = 0.0f) : x(x), y(y) {}
+    Vector2D(const int& x = 0, const int& y = 0) : x(x), y(y) {}
     Vector2D& operator=(const Vector2D& vector2D) {
         x = vector2D.x;
         y = vector2D.y;
         return *this;
     };
     virtual ~Vector2D() {}
+    friend void DrawEllipse(HDC, const Vector2D&, int);
+    friend Vector2D operator+(const Vector2D& left, const Vector2D& right);
 private:
-    float x, y;
+    int x, y;
 };
 
 Vector2D operator+(const Vector2D& left, const Vector2D& right) {
     return Vector2D(left.x + right.x, left.y + right.y);
 }
 
-void DrawEllipse(HDC hdc, const Vector2D& center, double radius) {
-    Ellipse(hdc, static_cast<int>(center.x - radius), static_cast<int>(center.y - radius), static_cast<int>(center.x + radius), static_cast<int>(center.y + radius));
+void DrawEllipse(HDC hdc, const Vector2D& center, int radius) {
+    Ellipse(hdc, (center.x - radius),(center.y - radius),(center.x + radius), (center.y + radius));
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -51,8 +51,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
 
-        const double radius = 30.0;
-        const double distance = 30.0;
+        const int radius = 30;
+        const int distance = 30;
         const int num_circles = 9;
 
         Vector2D centers[num_circles];
