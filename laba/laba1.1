@@ -1,0 +1,98 @@
+#include <string>
+#include <iostream>
+#include <vector>
+#include <ctime>
+
+enum class BookType { art, technical };
+
+
+
+class Book {
+public:
+
+    Book(const std::string& _authorName, const std::string& _bookTitle, BookType _bookType) :
+        authorName(_authorName),
+        bookTitle(_bookTitle),
+        bookType(_bookType) {}
+
+    BookType GetBookType()const {
+        return bookType;
+    }
+
+private:
+    const std::string authorName;
+    const std::string bookTitle;
+    const BookType bookType;
+};
+
+class LibraryBook {
+public:
+
+    ~LibraryBook() {
+        for (int i = 0; i < size(lib); ++i) {
+            delete lib[i];
+        }
+        lib.clear();
+    }
+    void addBook(const std::string& authorName, const std::string& bookTitle, BookType bookType) {
+        if ((authorName == "") || (bookTitle == "")) {
+            std::cout << "no valid book\n";
+        }
+        else {
+            lib.push_back(new Book(authorName, bookTitle, bookType));
+        }
+
+    }
+
+    void CounterTypeWithSwitch() {
+        int artBook = 0;
+        int techBook = 0;
+
+        for (const Book* book : lib) {
+            switch (book->GetBookType()) {
+            case BookType::art:
+                ++artBook;
+                break;
+            case BookType::technical:
+                ++techBook;
+                break;
+            }
+        }
+        std::cout << "art book: " << artBook << '\n';
+        std::cout << "technical book: " << techBook << '\n';
+    }
+
+    void CounterTypeNoneSwitch() {
+        int artBook = 0;
+        int techBook = 0;
+        for (const Book* book : lib) {
+            if (book->GetBookType() == BookType::art) {
+                ++artBook;
+            }
+            else {
+                ++techBook;
+            }
+
+        }
+
+        std::cout << "art book: " << artBook << '\n';
+        std::cout << "technical book: " << techBook << '\n';
+    }
+
+private:
+    std::vector<Book*> lib;
+};
+
+int main()
+{
+    LibraryBook libBook;
+
+    libBook.addBook("Boiko V.A.", "Jili Buli", BookType::art);
+    libBook.addBook("Ivanova N.I.", "math in life", BookType::technical);
+
+    std::cout << "with switch\n";
+    libBook.CounterTypeWithSwitch();
+
+    std::cout << "none switch\n";
+    libBook.CounterTypeNoneSwitch();
+}
