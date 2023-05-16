@@ -1,0 +1,74 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+
+class Car {
+public:
+	Car(const std::string& _company, const std::string& _model):
+		company(_company),
+		model(_model) {}
+
+	virtual ~Car() {
+		std::cout << "Car{company = " << company << ", " << "model = " << model << "}\n";
+	}
+
+private:
+	const std::string company;
+	const std::string model;
+};
+
+class Mercedes:public Car {
+public:
+	Mercedes(const std::string& model) :Car("Mercedes", model) {}
+
+	virtual ~Mercedes() = default;
+};
+
+class Audi: public Car {
+public:
+	Audi(const std::string& model) : Car("Audi", model) {}
+
+	virtual ~Audi() = default;
+};
+
+class Lada: public Car {
+public:
+	Lada(const std::string& model) :Car("Lada", model) {}
+
+	virtual ~Lada() = default;
+};
+
+class Lexus : public Car {
+public:
+	Lexus(const std::string& model) :Car("Lexus", model) {}
+
+	virtual ~Lexus() = default;
+};
+
+int main() {
+	std::ifstream file("data.txt");
+
+	std::vector<Car*> base;
+	std::string company, model;
+
+	while (file >> company >> model) {
+		if (company == "Mercedes") {
+			base.push_back(new Mercedes(model));
+		}
+		else if(company == "Audi") {
+			base.push_back(new Audi(model));
+		}
+		else if (company == "Lada") {
+			base.push_back(new Lada(model));
+		}
+		else if (company == "Lexus") {
+			base.push_back(new Lexus(model));
+		}
+	}
+
+	for (const Car* car : base) {
+		delete car;
+	}
+}
+
